@@ -5,6 +5,8 @@ function redirect($location){
 } 
 
 
+/************** FRONT END FUNCTIONS *****************************/
+
 /** this function will display the list of the products in home page public/index.php ***/
 function get_products(){
 	global $db;
@@ -48,4 +50,12 @@ function get_categories(){
 }
 /***** fetching the categories for home page public/index.php ****/
 
+
+/************** FRONT END FUNCTIONS *****************************/
+
+
+
+/************** BACK END FUNCTIONS *****************************/
+
+/************** BACK END FUNCTIONS *****************************/
 ?>
