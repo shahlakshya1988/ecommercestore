@@ -26,8 +26,8 @@ while($row_product = $get_product->fetch(PDO::FETCH_OBJ)):
 <div class="row">
 
     <div class="col-md-7">
-       <img class="img-responsive" src="http://placehold.it/700x600" alt="">
-
+      <?php /* <img class="img-responsive" src="http://placehold.it/700x600" alt=""> */ ?>
+			<img class="img-responsive" src="<?php echo $row_product->product_main_image; ?>" alt="<?php echo $row_product->product_title; ?>">
     </div>
 
     <div class="col-md-5">
