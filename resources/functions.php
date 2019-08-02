@@ -34,4 +34,18 @@ echo $productString;
 	}
 }
 /** this function will display the list of the products in home page public/index.php ***/
+
+/***** fetching the categories for home page public/index.php ****/
+function get_categories(){
+	global $db;
+	$select_category_query="SELECT * FROM `categories`";
+	$select_category = $db->prepare($select_category_query);
+	if($select_category->execute()){
+		while($row_category = $select_category->fetch(PDO::FETCH_OBJ)){
+			echo "<a href=\"category.php?cat_id={$row_category->cat_id}\" class=\"list-group-item\">{$row_category->cat_title}</a>";
+		}
+	} //if($select_category->execute())
+}
+/***** fetching the categories for home page public/index.php ****/
+
 ?>
