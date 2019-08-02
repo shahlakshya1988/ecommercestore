@@ -9,7 +9,16 @@
              <!-- categories goes here [sidenav] -->
 			<?php require_once TEMPLATE_FRONT.DS."sidenav.php"; ?>
             <!-- categories goes here [sidenav] -->
-
+<?php
+$product_id =trim($_GET["product_id"]);
+$get_product_query = "SELECT * FROM `products` where `product_id` = :product_id";
+$get_product = $db->prepare($get_product_query);
+$get_product->execute(array(":product_id"=>$product_id));
+//$row_product = $get_product->fetch(PDO::FETCH_OBJ);
+//echo "<pre>",print_r($row_product),"</pre>";
+while($row_product = $get_product->fetch(PDO::FETCH_OBJ)):
+//echo "<pre>",print_r($row_product),"</pre>";
+?>
 <div class="col-md-9">
 
 <!--Row For Image and Short Description-->
@@ -27,9 +36,9 @@
          
 
     <div class="caption-full">
-        <h4><a href="#">Javascript Course</a> </h4>
+        <h4><a href="#"><?php echo $row_product->product_title; ?></a> </h4>
         <hr>
-        <h4 class="">$24.99</h4>
+        <h4 class="">$<?php echo number_format($row_product->product_price,2); ?></h4>
 
     <div class="ratings">
      
@@ -43,7 +52,7 @@
         </p>
     </div>
           
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+        <?php echo $row_product->short_desc; ?>
 
    
     <form action="">
@@ -84,12 +93,7 @@
 
 <p></p>
            
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-
-
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+    <?php echo $row_product->product_description; ?>
 
     </div>
     <div role="tabpanel" class="tab-pane" id="profile">
@@ -195,7 +199,7 @@
 
 
 </div>
-
+<?php endwhile; // while loop for fetching product  ?>
 </div>
     <!-- /.container -->
 <?php require_once TEMPLATE_FRONT.DS."footer.php"; ?>
