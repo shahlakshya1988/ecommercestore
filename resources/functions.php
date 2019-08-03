@@ -2,7 +2,7 @@
 function redirect($location){
 	header("Location: {$location}");
 	die();
-} 
+}
 
 
 /************** FRONT END FUNCTIONS *****************************/
@@ -15,7 +15,7 @@ function get_products(){
 	if($get_product->execute()){
 		while($row_product = $get_product->fetch(PDO::FETCH_OBJ)){
 			$product_price = number_format($row_product->product_price,2);
-			
+
 			$productString = <<<EOL
 			<div class="col-sm-4 col-lg-4 col-md-4">
 				<div class="thumbnail">
@@ -27,7 +27,7 @@ function get_products(){
 						<!-- <p> </p> -->
 						<a class="btn btn-primary" target="_blank" href="#">Add To Cart</a>
 					</div>
-				   
+
 				</div>
 			</div>
 EOL;
@@ -54,7 +54,7 @@ function get_products_in_cat_page($cat_id){
 	global $db;
 	$get_products_query = "SELECT * FROM `products` where `product_category_id` = :product_category_id";
 	$get_products = $db->prepare($get_products_query);
-	//print_r($db->errorInfo()); 
+	//print_r($db->errorInfo());
 	$get_products->execute(array(":product_category_id"=>$cat_id));
 
 	while($row_product = $get_products->fetch(PDO::FETCH_OBJ)):
@@ -83,7 +83,7 @@ function get_products_in_shop_page(){
 	global $db;
 	$get_products_query = "SELECT * FROM `products`";
 	$get_products = $db->prepare($get_products_query);
-	//print_r($db->errorInfo()); 
+	//print_r($db->errorInfo());
 	$get_products->execute();
 
 	while($row_product = $get_products->fetch(PDO::FETCH_OBJ)):
@@ -104,6 +104,24 @@ EOL;
 echo $category_product;
 	endwhile;
 
+}
+
+function login_user($username,$password){
+	global $db;
+	if(isset($_POST["submit"])){
+		$username = trim($_POST["username"]);
+		$password = trim($_POST["password"]);
+		$sel_user_query = "SELECT * FROM `users` where `username` = :username and `password` = :password";
+		$sel_user = $db->prepare($sel_user_query);
+		$sel_user->execute(array(":username"=>$username,":password"=>$password));
+		if($sel_user->rowCount()){
+			redirect("admin/index.php");
+			die();
+		}else{
+			redirect("login.php");
+			die();
+		}
+	}
 }
 
 /************** FRONT END FUNCTIONS *****************************/
