@@ -78,6 +78,34 @@ echo $category_product;
 }
 
 
+
+function get_products_in_shop_page(){
+	global $db;
+	$get_products_query = "SELECT * FROM `products`";
+	$get_products = $db->prepare($get_products_query);
+	//print_r($db->errorInfo()); 
+	$get_products->execute();
+
+	while($row_product = $get_products->fetch(PDO::FETCH_OBJ)):
+	$category_product=<<<EOL
+	<div class="col-md-3 col-sm-6 hero-feature">
+		<div class="thumbnail">
+			<img src="{$row_product->product_image}" alt="{$row_product->product_title}" class="image-responsive">
+			<div class="caption">
+				<h3>{$row_product->product_title}</h3>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+				<p>
+					<a href="item.php?product_id={$row_product->product_id}" class="btn btn-primary">Buy Now!</a> <a href="item.php?product_id={$row_product->product_id}" class="btn btn-default">More Info</a>
+				</p>
+			</div>
+		</div>
+	</div>
+EOL;
+echo $category_product;
+	endwhile;
+
+}
+
 /************** FRONT END FUNCTIONS *****************************/
 
 
