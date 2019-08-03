@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 03, 2019 at 08:28 AM
+-- Generation Time: Aug 03, 2019 at 10:59 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -104,8 +104,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `email`) VALUES
-(1, 'rico', 'rico@example.com', '123'),
-(2, 'edwin', 'edwin@example.com', '123');
+(1, 'rico', '123', 'rico@example.com'),
+(2, 'edwin', '123', 'edwin@example.com');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

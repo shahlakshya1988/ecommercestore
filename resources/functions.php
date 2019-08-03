@@ -1,4 +1,21 @@
 <?php
+
+function setMessage($msg){
+	if(!empty($msg)){
+		$_SESSION["message"] = $msg;
+	}else{
+		$msg="";
+	}
+}
+
+function displayMessage(){
+	if(isset($_SESSION["message"])){
+		echo $_SESSION["message"];
+		unset($_SESSION["message"]);
+	}
+}
+
+
 function redirect($location){
 	header("Location: {$location}");
 	die();
@@ -106,7 +123,7 @@ echo $category_product;
 
 }
 
-function login_user($username,$password){
+function login_user(){
 	global $db;
 	if(isset($_POST["submit"])){
 		$username = trim($_POST["username"]);
@@ -115,9 +132,11 @@ function login_user($username,$password){
 		$sel_user = $db->prepare($sel_user_query);
 		$sel_user->execute(array(":username"=>$username,":password"=>$password));
 		if($sel_user->rowCount()){
+			setMessage("Welcome Admin, {$username}");
 			redirect("admin/index.php");
 			die();
 		}else{
+			setMessage("Please Enter Proper Username and Password");
 			redirect("login.php");
 			die();
 		}
