@@ -7,6 +7,7 @@
  * $_SESSION["product_2"] = 5;
  * 5 products with product_id of 2
  */
+
 ?>
 <!-- Page Content -->
 <div class="container">
@@ -15,8 +16,9 @@
     <!-- /.row -->
 
     <div class="row">
-
+        <h4 class="text-center"><?php displayMessage(); ?></h4>
         <h1>Checkout</h1>
+        
 
         <form action="">
             <table class="table table-striped">

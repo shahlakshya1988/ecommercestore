@@ -42,7 +42,7 @@ function get_products(){
 						<h4><a href="item.php?id={$row_product->product_id}">{$row_product->product_title}</a>
 						</h4>
 						<!-- <p> </p> -->
-						<a class="btn btn-primary" target="_blank" href="cart.php?add={$row_product->product_id}">Add To Cart</a>
+						<a class="btn btn-primary"  href="cart.php?add={$row_product->product_id}">Add To Cart</a>
 					</div>
 
 				</div>
