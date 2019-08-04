@@ -143,6 +143,15 @@ function login_user(){
 	}
 }
 
+
+function sendMessage(){
+    if($_POST["submit"]){
+        $name = trim($_POST["name"]);
+        $email = trim($_POST["email"]);
+        $subject = trim($_POST["subject"]);
+        $message = trim($_POST["message"]);
+    }
+}
 /************** FRONT END FUNCTIONS *****************************/
 
 
