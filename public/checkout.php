@@ -1,154 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php require_once "../resources/config.php"; ?>
+<?php require_once TEMPLATE_FRONT . DS . "header.php"; ?>
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Heroic Features - Start Bootstrap Template</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/heroic-features.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
-
-      <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+<?php 
+/***
+ * $_SESSION["product_{product_id}"] = {number_of_products}
+ * $_SESSION["product_2"] = 5;
+ * 5 products with product_id of 2
+ */
+?>
+<!-- Page Content -->
+<div class="container">
 
 
-    <!-- Page Content -->
-    <div class="container">
+    <!-- /.row -->
 
+    <div class="row">
 
-<!-- /.row --> 
+        <h1>Checkout</h1>
 
-<div class="row">
+        <form action="">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Sub-total</th>
 
-      <h1>Checkout</h1>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>apple</td>
+                        <td>$23</td>
+                        <td>3</td>
+                        <td>2</td>
 
-<form action="">
-    <table class="table table-striped">
-        <thead>
-          <tr>
-           <th>Product</th>
-           <th>Price</th>
-           <th>Quantity</th>
-           <th>Sub-total</th>
-     
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>apple</td>
-                <td>$23</td>
-                <td>3</td>
-                <td>2</td>
-              
-            </tr>
-        </tbody>
-    </table>
-</form>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
 
 
 
-<!--  ***********CART TOTALS*************-->
-            
-<div class="col-xs-4 pull-right ">
-<h2>Cart Totals</h2>
+        <!--  ***********CART TOTALS*************-->
 
-<table class="table table-bordered" cellspacing="0">
+        <div class="col-xs-4 pull-right ">
+            <h2>Cart Totals</h2>
 
-<tr class="cart-subtotal">
-<th>Items:</th>
-<td><span class="amount">4</span></td>
-</tr>
-<tr class="shipping">
-<th>Shipping and Handling</th>
-<td>Free Shipping</td>
-</tr>
+            <table class="table table-bordered" cellspacing="0">
 
-<tr class="order-total">
-<th>Order Total</th>
-<td><strong><span class="amount">$3444</span></strong> </td>
-</tr>
+                <tr class="cart-subtotal">
+                    <th>Items:</th>
+                    <td><span class="amount">4</span></td>
+                </tr>
+                <tr class="shipping">
+                    <th>Shipping and Handling</th>
+                    <td>Free Shipping</td>
+                </tr>
 
-
-</tbody>
-
-</table>
-
-</div><!-- CART TOTALS-->
+                <tr class="order-total">
+                    <th>Order Total</th>
+                    <td><strong><span class="amount">$3444</span></strong> </td>
+                </tr>
 
 
- </div><!--Main Content-->
+                </tbody>
 
+            </table>
 
-           <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2030</p>
-                </div>
-            </div>
-        </footer>
+        </div><!-- CART TOTALS-->
 
 
     </div>
-    <!-- /.container -->
+    <!--Main Content-->
 
- <!-- jQuery -->
-    <script src="js/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
 
-</body>
 
-</html>
+
+
+</div>
+<!-- /.container -->
+<?php require_once TEMPLATE_FRONT . DS . "footer.php"; ?>

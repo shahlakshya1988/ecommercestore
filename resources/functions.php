@@ -42,7 +42,7 @@ function get_products(){
 						<h4><a href="item.php?id={$row_product->product_id}">{$row_product->product_title}</a>
 						</h4>
 						<!-- <p> </p> -->
-						<a class="btn btn-primary" target="_blank" href="#">Add To Cart</a>
+						<a class="btn btn-primary" target="_blank" href="cart.php?add={$row_product->product_id}">Add To Cart</a>
 					</div>
 
 				</div>
@@ -83,7 +83,7 @@ function get_products_in_cat_page($cat_id){
 				<h3>{$row_product->product_title}</h3>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 				<p>
-					<a href="item.php?product_id={$row_product->product_id}" class="btn btn-primary">Buy Now!</a> <a href="item.php?product_id={$row_product->product_id}" class="btn btn-default">More Info</a>
+					<a href="cart.php?add={$row_product->product_id}" class="btn btn-primary">Add To Card!</a> <a href="item.php?product_id={$row_product->product_id}" class="btn btn-default">More Info</a>
 				</p>
 			</div>
 		</div>
@@ -112,7 +112,7 @@ function get_products_in_shop_page(){
 				<h3>{$row_product->product_title}</h3>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 				<p>
-					<a href="item.php?product_id={$row_product->product_id}" class="btn btn-primary">Buy Now!</a> <a href="item.php?product_id={$row_product->product_id}" class="btn btn-default">More Info</a>
+                <a href="cart.php?add={$row_product->product_id}" class="btn btn-primary">Add To Card!</a> <a href="item.php?product_id={$row_product->product_id}" class="btn btn-default">More Info</a>
 				</p>
 			</div>
 		</div>
@@ -172,4 +172,3 @@ function sendMessage(){
 /************** BACK END FUNCTIONS *****************************/
 
 /************** BACK END FUNCTIONS *****************************/
-?>
