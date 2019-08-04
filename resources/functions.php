@@ -145,11 +145,24 @@ function login_user(){
 
 
 function sendMessage(){
-    if($_POST["submit"]){
+    if(isset($_POST["submit"])){
         $name = trim($_POST["name"]);
         $email = trim($_POST["email"]);
         $subject = trim($_POST["subject"]);
         $message = trim($_POST["message"]);
+        $headers="From: {$name} {$email}";
+        $to = "shahlakshya1988@gmail.com";
+        $result = mail($to,$subject,$message,$headers);
+        if(!$result){
+            // echo "Error";
+            setMessage("Sorry We Are Unable To Send Your Message");
+        }else{
+            // echo "Send";
+            setMessage("Your Message Has Been Successfully Delivered");            
+        }
+        redirect("contact.php");
+        die();
+
     }
 }
 /************** FRONT END FUNCTIONS *****************************/
