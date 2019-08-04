@@ -1,4 +1,5 @@
-<?php require_once "../resources/config.php"; ?>
+<?php require_once "../resources/config.php"; error_reporting(0); ?>
+<?php require_once "cart.php"; ?>
 <?php require_once TEMPLATE_FRONT . DS . "header.php"; ?>
 
 <?php 
@@ -18,7 +19,7 @@
     <div class="row">
         <h4 class="text-center"><?php displayMessage(); ?></h4>
         <h1>Checkout</h1>
-        <?php var_dump($_SESSION["product_1"]); ?>
+        <?php // var_dump($_SESSION["product_1"]); ?>
 
         <form action="">
             <table class="table table-striped">
@@ -33,18 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>apple</td>
-                        <td>$23</td>
-                        <td>3</td>
-                        <td>2</td>
-                        <td>
-                            <a href="cart.php?add=1">Add</a>  
-                            <a href="cart.php?remove=1">Remove</a>
-                            <a href="cart.php?delete=1">Delete</a>
-                        </td>
-
-                    </tr>
+                    <?php cart(); ?>
                 </tbody>
             </table>
         </form>
