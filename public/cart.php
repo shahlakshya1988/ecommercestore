@@ -58,7 +58,7 @@ function cart()
                 while ($row = $query->fetch(PDO::FETCH_OBJ)) {
                     $subtotal = $value * $row->product_price;
                     $total+=$subtotal;
-                    $item_count++;
+                    $item_count+=$value;
                     $subtotal = number_format($subtotal,2);
                     $products = <<<EOL
                     <tr>
