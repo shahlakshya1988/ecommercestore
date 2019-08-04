@@ -37,9 +37,11 @@ if (isset($_GET["delete"])) {
 
 function cart()
 {
-    $product_id_array = array();
     global $db;
+    $product_id_array = array();
     unset($product_id_array);
+    $total = 0;
+    $item_count=0;
     
     $sql = "SELECT * FROM `products` where `product_id`=:product_id ";
     $query = $db->prepare($sql);
@@ -54,12 +56,16 @@ function cart()
              $query->execute(array(":product_id"=>$temp_product_id));
             
                 while ($row = $query->fetch(PDO::FETCH_OBJ)) {
+                    $subtotal = $value * $row->product_price;
+                    $total+=$subtotal;
+                    $item_count++;
+                    $subtotal = number_format($subtotal,2);
                     $products = <<<EOL
                     <tr>
                         <td>{$row->product_title}</td>
-                        <td>&#36; {$row->product_price}</td>
-                        <td>{$_SESSION["product_" .$row->product_id]}</td>
-                        <td>2</td>
+                        <td>&#36;{$row->product_price}</td>
+                        <td>{$value}</td>
+                        <td>&#36;{$subtotal}</td>
                         <td>
                             <a href="cart.php?add={$row->product_id}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a>  
                             <a href="cart.php?remove={$row->product_id}" class="btn btn-warning"><span class="glyphicon glyphicon-minus"></span></a>
@@ -72,4 +78,7 @@ function cart()
             } // if ($value > 0) 
         } //if (substr($key, 0, 8) == "product_")
     } //foreach ($_SESSION as $key => $value) 
+
+    $_SESSION["item_total"]=$total;
+    $_SESSION["item_count"]=$item_count;
 }
