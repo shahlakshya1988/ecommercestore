@@ -45,6 +45,7 @@ function cart()
     
     $sql = "SELECT * FROM `products` where `product_id`=:product_id ";
     $query = $db->prepare($sql);
+    $count = 1;
     foreach ($_SESSION as $key => $value) {
         if (substr($key, 0, 8) == "product_") {
             //var_dump("Hello");
@@ -54,7 +55,7 @@ function cart()
             if ($value > 0) {            
             
              $query->execute(array(":product_id"=>$temp_product_id));
-            
+                
                 while ($row = $query->fetch(PDO::FETCH_OBJ)) {
                     $subtotal = $value * $row->product_price;
                     $total+=$subtotal;
@@ -62,7 +63,15 @@ function cart()
                     $subtotal = number_format($subtotal,2);
                     $products = <<<EOL
                     <tr>
-                        <td>{$row->product_title}</td>
+                        <td>{$row->product_title}
+                     
+                        <input type="hidden" name="item_name_{$count}" value="{$row->product_title}">
+                         <input type="hidden" name="item_number_{$count}" value="{$row->product_id}">
+                          <input type="hidden" name="quantity_{$count}" value="{$value}">
+                         <input type="hidden" name="amount_{$count}" value="{$subtotal}">
+                      
+
+                        </td>
                         <td>&#36;{$row->product_price}</td>
                         <td>{$value}</td>
                         <td>&#36;{$subtotal}</td>
@@ -74,9 +83,12 @@ function cart()
                     </tr>
             EOL;
                     echo $products;
+
                 } // while ($row = $query->fetch(PDO::FETCH_OBJ)) 
+                 $count++;
             } // if ($value > 0) 
         } //if (substr($key, 0, 8) == "product_")
+        
     } //foreach ($_SESSION as $key => $value) 
 
     $_SESSION["item_total"]=$total;
