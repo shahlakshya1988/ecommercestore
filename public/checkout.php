@@ -20,10 +20,17 @@
         <h4 class="text-center"><?php displayMessage(); ?></h4>
         <h1>Checkout</h1>
         <?php // var_dump($_SESSION["product_1"]); ?>
-
-        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-          <input type="hidden" name="cmd" value="_cart">
+        <?php 
+            if(isset($_REQUEST["submit"])){
+                echo "<pre>",print_r($_POST),"</pre>";
+            }
+        ?>
+<!-- https://www.paypal.com/cgi-bin/webscr -->
+       <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+         <input type="hidden" name="cmd" value="_cart">
           <input type="hidden" name="business" value="lakshya1@shahlakshya1988.com">
+          <input type="hidden" name="currency_code" value="USD">
+
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -39,9 +46,8 @@
                     <?php cart(); ?>
                 </tbody>
             </table>
-            <input type="image" name="submit"
-    src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"
-    alt="PayPal - The safer, easier way to pay online">
+          <!-- <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"    alt="PayPal - The safer, easier way to pay online"> -->
+        <?php echo show_paypal(); ?>
         </form>
 
 
@@ -52,7 +58,7 @@
             <h2>Cart Totals</h2>
 
             <table class="table table-bordered" cellspacing="0">
-
+                <tbody>
                 <tr class="cart-subtotal">
                     <th>Items:</th>
                     <td><span class="amount"><?php echo $_SESSION["item_count"]; ?></span></td>
@@ -77,7 +83,6 @@
 
     </div>
     <!--Main Content-->
-
 
 
 

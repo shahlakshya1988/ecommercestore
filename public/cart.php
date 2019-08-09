@@ -94,3 +94,16 @@ function cart()
     $_SESSION["item_total"]=$total;
     $_SESSION["item_count"]=$item_count;
 }
+
+
+function show_paypal(){
+    // var_dump(expression)
+    if(isset($_SESSION["item_count"])){
+    $paypal_button=<<<EOF
+    <input type="image" name="submit"
+       src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"
+       alt="PayPal - The safer, easier way to pay online">
+    EOF;
+    }
+    return $paypal_button;
+}
