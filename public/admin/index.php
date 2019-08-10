@@ -22,7 +22,11 @@ require_once TEMPLATE_BACK.DS."header.php";
                 </div>
                 <!-- /.row -->
 
-               
+               <?php 
+               if( $_SERVER["REQUEST_URI"] == "/ecommercestore/public/admin/" || $_SERVER["REQUEST_URI"] == "/ecommercestore/public/admin/index.php" ){
+                    require_once TEMPLATE_BACK.DS."admin_content.php";
+               }
+               ?>
 
                 
 
