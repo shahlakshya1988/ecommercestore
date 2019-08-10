@@ -1,5 +1,5 @@
 <?php
-require_once "../resources/config.php";
+require_once "config.php";
 if (isset($_GET["add"])) {
     $product_id = trim($_GET["add"]);
     $sel_product_query = "SELECT `product_quantity`,`product_title` FROM `products` where `product_id` = :product_id";
@@ -14,7 +14,7 @@ if (isset($_GET["add"])) {
     } else {
         setMessage("We Only Have {$result->product_quantity} of {$result->product_title} Available");
     }
-    redirect("checkout.php");
+    redirect("../public/checkout.php");
     die();
 }
 if (isset($_GET["remove"])) {
@@ -22,7 +22,7 @@ if (isset($_GET["remove"])) {
     if ($_SESSION["product_" . $product_id] > 0) {
         $_SESSION["product_" . $product_id]--;
     }
-    redirect("checkout.php");
+    redirect("../public/checkout.php");
     die();
 }
 
@@ -30,7 +30,7 @@ if (isset($_GET["remove"])) {
 if (isset($_GET["delete"])) {
     $product_id = trim($_GET["delete"]);
     $_SESSION["product_" . $product_id] = 0;
-    redirect("checkout.php");
+    redirect("../public/checkout.php");
     die();
 }
 
@@ -76,9 +76,9 @@ function cart()
                         <td>{$value}</td>
                         <td>&#36;{$subtotal}</td>
                         <td>
-                            <a href="cart.php?add={$row->product_id}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a>  
-                            <a href="cart.php?remove={$row->product_id}" class="btn btn-warning"><span class="glyphicon glyphicon-minus"></span></a>
-                            <a href="cart.php?delete={$row->product_id}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a href="../resources/cart.php?add={$row->product_id}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a>  
+                            <a href="../resources/cart.php?remove={$row->product_id}" class="btn btn-warning"><span class="glyphicon glyphicon-minus"></span></a>
+                            <a href="../resources/cart.php?delete={$row->product_id}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
 EOL;

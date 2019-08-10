@@ -1,5 +1,5 @@
 <?php require_once "../resources/config.php"; error_reporting(0); ?>
-<?php require_once "cart.php"; ?>
+
 <?php require_once TEMPLATE_FRONT . DS . "header.php"; ?>
 
 <?php 

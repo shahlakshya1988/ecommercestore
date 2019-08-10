@@ -18,4 +18,5 @@ try{
 	die();
 }
 require "functions.php";
+require_once "cart.php";
 ?>

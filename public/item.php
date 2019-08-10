@@ -54,7 +54,7 @@ while($row_product = $get_product->fetch(PDO::FETCH_OBJ)):
           
         <?php echo $row_product->short_desc; ?>
 
-    <a href="cart.php?add=<?php echo $row_product->product_id; ?>" class="btn btn-primary"> ADD TO CART </a>
+    <a href="../resources/cart.php?add=<?php echo $row_product->product_id; ?>" class="btn btn-primary"> ADD TO CART </a>
     <?php /* <form action="">
         <div class="form-group">
             <input type="submit" class="btn btn-primary" value="ADD TO CART">
