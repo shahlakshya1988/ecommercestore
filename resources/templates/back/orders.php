@@ -1,7 +1,4 @@
-<?php 
-require_once "../../resources/config.php";
-require_once TEMPLATE_BACK.DS."header.php"; 
-?>
+
         <div class="col-md-12">
             <div class="row">
                 <h1 class="page-header">
@@ -44,6 +41,3 @@ require_once TEMPLATE_BACK.DS."header.php";
 
         </div>
         
-
-
-<?php require_once TEMPLATE_BACK.DS."footer.php"; ?>

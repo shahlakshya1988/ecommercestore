@@ -30,6 +30,26 @@ require_once TEMPLATE_BACK.DS."header.php";
                if(isset($_GET["orders"])){
                     require_once TEMPLATE_BACK.DS."orders.php";
                }
+
+               if(isset($_GET["categories"])){
+                    require_once TEMPLATE_BACK.DS."categories.php";
+               }
+
+               if(isset($_GET["products"])){
+                    require_once TEMPLATE_BACK.DS."products.php";
+               }
+
+               if(isset($_GET["add_product"])){
+                    require_once TEMPLATE_BACK.DS."add_product.php";
+               }
+
+               if(isset($_GET["edit_product"])){
+                    require_once TEMPLATE_BACK.DS."edit_product.php";
+               }
+
+               if(isset($_GET["users"])){
+                    require_once TEMPLATE_BACK.DS."users.php";
+               }
                ?>
 
                 
