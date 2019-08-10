@@ -36,10 +36,10 @@ function get_products(){
 			$productString = <<<EOL
 			<div class="col-sm-4 col-lg-4 col-md-4">
 				<div class="thumbnail">
-					<a href="item.php?id={$row_product->product_id}"><img src="{$row_product->product_image}" alt="{$row_product->product_title}"></a>
+					<a href="item.php?product_id={$row_product->product_id}"><img src="{$row_product->product_image}" alt="{$row_product->product_title}"></a>
 					<div class="caption">
 						<h4 class="pull-right">&#36;{$product_price}</h4>
-						<h4><a href="item.php?id={$row_product->product_id}">{$row_product->product_title}</a>
+						<h4><a href="item.php?product_id={$row_product->product_id}">{$row_product->product_title}</a>
 						</h4>
 						<!-- <p> </p> -->
 						<a class="btn btn-primary"  href="cart.php?add={$row_product->product_id}">Add To Cart</a>

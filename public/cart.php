@@ -81,7 +81,7 @@ function cart()
                             <a href="cart.php?delete={$row->product_id}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
-            EOL;
+EOL;
                     echo $products;
 
                 } // while ($row = $query->fetch(PDO::FETCH_OBJ)) 
@@ -97,13 +97,13 @@ function cart()
 
 
 function show_paypal(){
-    // var_dump(expression)
-    if(isset($_SESSION["item_count"])){
+    // var_dump($_SESSION["item_count"]);
+    if(isset($_SESSION["item_count"]) && $_SESSION["item_count"]>0){
     $paypal_button=<<<EOF
     <input type="image" name="submit"
        src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"
        alt="PayPal - The safer, easier way to pay online">
-    EOF;
+EOF;
     }
     return $paypal_button;
 }
