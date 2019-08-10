@@ -132,6 +132,7 @@ function login_user(){
 		$sel_user = $db->prepare($sel_user_query);
 		$sel_user->execute(array(":username"=>$username,":password"=>$password));
 		if($sel_user->rowCount()){
+			$_SESSION["username"] = $username;
 			setMessage("Welcome Admin, {$username}");
 			redirect("admin/index.php");
 			die();

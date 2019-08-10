@@ -1,5 +1,10 @@
 <?php 
 require_once "../../resources/config.php"; 
+
+ if(!isset($_SESSION["username"])){
+    redirect("../index.php");
+ }
+
 require_once TEMPLATE_BACK.DS."header.php";
 ?>
 
