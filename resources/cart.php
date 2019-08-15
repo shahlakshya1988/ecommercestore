@@ -107,3 +107,36 @@ EOF;
     }
     return $paypal_button;
 }
+
+
+function report(){
+    $total = 0;
+    $item_quantity = 0;
+    global $db;
+    $sql = "SELECT * FROM `products` where `product_id` = :product_id";
+    $query = $db->prepare($sql);
+    foreach($_SESSION as $key => $value){
+        if($value>0){
+            if(substr($key,0,8) == "product_"){
+                $explode_key = explode("_", $key);
+                $temp_product_id = $explode_key[1];
+                $query->bindParam(":product_id",$temp_product_id);
+                $query->execute();
+                $insert_sql = "INSERT INTO `reports` (`product_id`,`product_price`,`product_quantity`) values (:product_id,:product_price,:product_quantity) ";
+                $insert_query = $db->prepare($insert_sql);
+                while ($row = $query->fetch(PDO::FETCH_OBJ)) {
+                    $subtotal = $value * $row->product_price;
+                    $total+=$subtotal;
+                    $item_quantity+=$value;
+                    $subtotal = number_format($subtotal,2);
+
+                    $product_quantity  = $value;
+                    $product_id = $temp_product_id;
+                    $product_name = $row->product_name;
+                    $insert_query->execute([":product_id"=>$product_id,":product_price"=>$subtotal,":product_quantity"=>$product_quantity]);
+                    
+                }
+            }
+        }
+    }
+}
