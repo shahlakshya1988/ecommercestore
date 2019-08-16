@@ -109,7 +109,7 @@ EOF;
 }
 
 
-function report(){
+function process_trasactions(){
     global $db;
     $amount = $_GET["amt"];
     $currency = $_GET["cc"];

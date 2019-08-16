@@ -5,7 +5,7 @@
 if(isset($_GET["tx"])){
     //tx=1kkls34kj23&st=Completed&amt=675&cc=USD
     //tx=3b009265bbc9d&st=Completed&amt=675&cc=USD
-    report();
+    process_trasactions();
     // var_dump($insert->errorInfo());
     session_destroy();
 }else{

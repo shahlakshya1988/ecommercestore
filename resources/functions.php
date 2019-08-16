@@ -177,6 +177,7 @@ function display_orders(){
 	$get_orders = $db->prepare($sql);
 	$get_orders->execute();
 	while($row = $get_orders->fetch(PDO::FETCH_OBJ)){
+		$delete_order = "../../resources/templates/back/delete_order.php?order_id=".$row->order_id;
 		$order_tr = <<<ORDER
 		<tr>
 			<td>{$row->order_id}</td>
@@ -184,6 +185,7 @@ function display_orders(){
 			<td>{$row->order_transaction}</td>
 			<td>{$row->order_currency}</td>
 			<td>{$row->order_status}</td>
+			<td><a class="btn btn-danger" href="{$delete_order}"><span class="glyphicon glyphicon-remove"></span></a></td>
 		</tr>
 ORDER;
 echo $order_tr;
