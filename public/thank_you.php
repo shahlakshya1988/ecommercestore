@@ -7,7 +7,7 @@ if(isset($_GET["tx"])){
     //tx=3b009265bbc9d&st=Completed&amt=675&cc=USD
     report();
     // var_dump($insert->errorInfo());
-    //session_destroy();
+    session_destroy();
 }else{
     redirect("index.php");
     die();
