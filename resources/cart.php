@@ -110,9 +110,22 @@ EOF;
 
 
 function report(){
+    global $db;
+    $amount = $_GET["amt"];
+    $currency = $_GET["cc"];
+    $trasaction = $_GET["tx"];
+    $status = $_GET["st"];
+    $insert_query = "INSERT INTO `orders`(`order_id`,`order_amount`,`order_transaction`,`order_status`,`order_currency`) values (NULL,:order_amount,:order_transaction,:order_status,:order_currency)";
+    $insert = $db->prepare($insert_query);
+    $insert->bindParam(":order_amount",$amount);
+    $insert->bindParam(":order_transaction",$trasaction);
+    $insert->bindParam(":order_status",$status);
+    $insert->bindParam(":order_currency",$currency);
+    $insert->execute();
+    $lastOrderId = $db->lastInsertId();
     $total = 0;
     $item_quantity = 0;
-    global $db;
+   
     $sql = "SELECT * FROM `products` where `product_id` = :product_id";
     $query = $db->prepare($sql);
     foreach($_SESSION as $key => $value){
@@ -122,7 +135,7 @@ function report(){
                 $temp_product_id = $explode_key[1];
                 $query->bindParam(":product_id",$temp_product_id);
                 $query->execute();
-                $insert_sql = "INSERT INTO `reports` (`product_id`,`product_price`,`product_quantity`) values (:product_id,:product_price,:product_quantity) ";
+                $insert_sql = "INSERT INTO `reports` (`product_id`,`order_id`,`product_price`,`product_quantity`,`product_title`) values (:product_id,:order_id,:product_price,:product_quantity,:product_title) ";
                 $insert_query = $db->prepare($insert_sql);
                 while ($row = $query->fetch(PDO::FETCH_OBJ)) {
                     $subtotal = $value * $row->product_price;
@@ -132,8 +145,9 @@ function report(){
 
                     $product_quantity  = $value;
                     $product_id = $temp_product_id;
-                    $product_name = $row->product_name;
-                    $insert_query->execute([":product_id"=>$product_id,":product_price"=>$subtotal,":product_quantity"=>$product_quantity]);
+                    $product_title = $row->product_title;
+                    $insert_query->execute([":product_id"=>$product_id,":product_price"=>$subtotal,":product_quantity"=>$product_quantity,":order_id"=>$lastOrderId,":product_title"=>$product_title]);
+                    var_dump($insert_query->errorInfo());
                     
                 }
             }
