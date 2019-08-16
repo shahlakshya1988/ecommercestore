@@ -171,5 +171,22 @@ function sendMessage(){
 
 
 /************** BACK END FUNCTIONS *****************************/
-
+function display_orders(){
+	global $db;
+	$sql="SELECT * FROM `orders`";
+	$get_orders = $db->prepare($sql);
+	$get_orders->execute();
+	while($row = $get_orders->fetch(PDO::FETCH_OBJ)){
+		$order_tr = <<<ORDER
+		<tr>
+			<td>{$row->order_id}</td>
+			<td>{$row->order_amount}</td>
+			<td>{$row->order_transaction}</td>
+			<td>{$row->order_currency}</td>
+			<td>{$row->order_status}</td>
+		</tr>
+ORDER;
+echo $order_tr;
+	}
+}
 /************** BACK END FUNCTIONS *****************************/
