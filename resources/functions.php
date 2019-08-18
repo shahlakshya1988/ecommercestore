@@ -204,7 +204,7 @@ function get_products_in_admin(){
     while($fh_product = $get_products->fetch(PDO::FETCH_OBJ)){
         $get_category->execute(["cat_id"=>$fh_product->product_category_id]);
         $fh_category = $get_category->fetch(PDO::FETCH_OBJ);
-        $delete_product = "../../resources/templates/back/delete_product.php?order_id=".$fh_product->product_id;
+        $delete_product = "../../resources/templates/back/delete_product.php?product_id=".$fh_product->product_id;
         $products=<<<EOL
         <tr>
             <td>{$fh_product->product_id}</td>

@@ -6,6 +6,9 @@
    All Products
 
 </h1>
+<h3 class="bg-success text-center">
+  <?php echo displayMessage(); ?>
+</h2>
 <table class="table table-hover">
 
 
