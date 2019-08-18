@@ -222,5 +222,26 @@ echo $products;
 
     
 }
+function add_product(){
+	if(isset($_POST["publish"])){
 
+	}
+	if(isset($_POST["draft"])){
+
+	}
+}
+
+function get_categories_add_product($product_category_id=null){
+	global $db;
+	$get_categories_sql="SELECT * FROM `categories`";
+	$get_categories = $db->prepare($get_categories_sql);
+	$get_categories->execute();
+	while($fh_category = $get_categories->fetch(PDO::FETCH_OBJ)){
+		$selected_string = ($product_category_id == $fh_category->cat_id) ? "selected" : "";
+		$select_category=<<<EOL
+		<option value="{$fh_category->cat_id}" {$selected_string}>{$fh_category->cat_title}</option>
+EOL;
+		echo $select_category;
+	}
+}
 /************** BACK END FUNCTIONS *****************************/

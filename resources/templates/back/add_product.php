@@ -1,4 +1,4 @@
-
+<?php add_product(); ?>
 <div class="col-md-12">
 
 <div class="row">
@@ -23,8 +23,8 @@
 
 
     <div class="form-group">
-           <label for="product-title">Product Description</label>
-      <textarea name="product_description" id="" cols="30" rows="10" class="form-control"></textarea>
+           <label for="product_description">Product Description</label>
+      <textarea name="product_description" id="product_description" cols="30" rows="10" class="form-control"></textarea>
     </div>
 
 
@@ -32,8 +32,8 @@
     <div class="form-group row">
 
       <div class="col-xs-3">
-        <label for="product-price">Product Price</label>
-        <input type="number" name="product_price" class="form-control" size="60">
+        <label for="product_price">Product Price</label>
+        <input type="number" name="product_price" id="product_price" class="form-control" size="60">
       </div>
     </div>
 
@@ -65,7 +65,7 @@
           <hr>
         <select name="product_category" id="" class="form-control">
             <option value="">Select Category</option>
-           
+            <?php get_categories_add_product(); ?>
         </select>
 
 
