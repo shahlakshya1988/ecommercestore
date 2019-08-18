@@ -191,4 +191,34 @@ ORDER;
 echo $order_tr;
 	}
 }
+
+function get_products_in_admin(){
+    global $db;
+    $sql="SELECT * FROM `products`";
+    $get_products = $db->prepare($sql);
+   $get_products->execute();
+   // var_dump($get_products->errorInfo());
+
+   $get_category_sql="SELECT * FROM `categories` where `cat_id` = :cat_id"; 
+   $get_category = $db->prepare($get_category_sql); 
+    while($fh_product = $get_products->fetch(PDO::FETCH_OBJ)){
+        $get_category->execute(["cat_id"=>$fh_product->product_category_id]);
+        $fh_category = $get_category->fetch(PDO::FETCH_OBJ);
+        $products=<<<EOL
+        <tr>
+            <td>{$fh_product->product_id}</td>
+            <td>{$fh_product->product_title}<br>
+                <img src="{$fh_product->product_image}" alt="">
+            </td>
+            <td>{$fh_category->cat_title}</td>
+            <td>{$fh_product->product_price}</td>
+            <td>{$fh_product->product_quantity}</td>
+        </tr>
+EOL;
+echo $products;
+    }
+
+    
+}
+
 /************** BACK END FUNCTIONS *****************************/
