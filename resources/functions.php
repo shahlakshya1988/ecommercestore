@@ -224,7 +224,26 @@ echo $products;
 }
 function add_product(){
 	if(isset($_POST["publish"])){
+		$product_title = trim($_POST["product_title"]);
+		$product_description = trim($_POST["product_description"]);
+		$product_price = trim($_POST["product_price"]);
+		$product_category = trim($_POST["product_category"]);
+		$short_desc = trim($_POST["short_desc"]);
+		$product_quantity = trim($_POST["product_quantity"]);
+		
+		$product_image = $_FILES["product_image"];
+		$product_image_name = $_FILES["product_image"]["name"];
+		$product_image_tmp_name = $_FILES["product_image"]["tmp_name"];
+		$product_image_error = $_FILES["product_image"]["error"];
+		$product_image_size = $_FILES["product_image"]["size"];
+		$product_image_type= $_FILES["product_image"]["type"];
 
+		$product_main_image = $_FILES["product_main_image"];
+		$product_main_image_name = $_FILES["product_main_image"]["name"];
+		$product_main_image_tmp_name = $_FILES["product_main_image"]["tmp_name"];
+		$product_main_image_type = $_FILES["product_main_image"]["type"];
+		$product_main_image_error = $_FILES["product_main_image"]["error"];
+		$product_main_image_size = $_FILES["product_main_image"]["size"];
 	}
 	if(isset($_POST["draft"])){
 
