@@ -45,7 +45,9 @@ require_once TEMPLATE_BACK.DS."header.php";
                }
 
                if(isset($_GET["add_product"])){
+                
                     require_once TEMPLATE_BACK.DS."add_product.php";
+
                }
 
                if(isset($_GET["edit_product"])){

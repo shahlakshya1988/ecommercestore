@@ -105,12 +105,12 @@
     <!-- Product Image -->
     <div class="form-group">
         <label for="product_image">Product Image</label>
-        <input type="file" name="file" name="product_image" id="product_image">
+        <input type="file"  name="product_image" id="product_image">
       
     </div>
     <div class="form-group">
         <label for="product_main_image">Product Main Image</label>
-        <input type="file" name="file" name="product_main_image" id="product_main_image">
+        <input type="file"  name="product_main_image" id="product_main_image">
       
     </div>
 

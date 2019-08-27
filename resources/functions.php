@@ -223,7 +223,12 @@ echo $products;
     
 }
 function add_product(){
+	global $allowed_image_extension;
+	global $allowed_image_type;
 	if(isset($_POST["publish"])){
+		// var_dump($_FILES);
+		// var_dump($_POST);
+
 		$product_title = trim($_POST["product_title"]);
 		$product_description = trim($_POST["product_description"]);
 		$product_price = trim($_POST["product_price"]);
@@ -233,6 +238,10 @@ function add_product(){
 		
 		$product_image = $_FILES["product_image"];
 		$product_image_name = $_FILES["product_image"]["name"];
+		$product_image_name_array  = explode(".",$product_image_name);
+		$product_image_name_extension = strtolower(end($product_image_name_array));
+		// var_dump($product_image_name_extension);
+
 		$product_image_tmp_name = $_FILES["product_image"]["tmp_name"];
 		$product_image_error = $_FILES["product_image"]["error"];
 		$product_image_size = $_FILES["product_image"]["size"];
@@ -240,10 +249,32 @@ function add_product(){
 
 		$product_main_image = $_FILES["product_main_image"];
 		$product_main_image_name = $_FILES["product_main_image"]["name"];
+		$product_main_image_name_array = explode(".",$product_main_image_name);
+		$product_main_image_extension = end($product_main_image_name_array);
+		// var_dump($product_main_image_extension);
+
 		$product_main_image_tmp_name = $_FILES["product_main_image"]["tmp_name"];
 		$product_main_image_type = $_FILES["product_main_image"]["type"];
 		$product_main_image_error = $_FILES["product_main_image"]["error"];
 		$product_main_image_size = $_FILES["product_main_image"]["size"];
+
+		/*** checking for image ***/
+		// var_dump($allowed_image_extension);
+		
+		if(in_array($product_image_name_extension,$allowed_image_extension) && in_array($product_main_image_extension,$allowed_image_extension) && in_array($product_image_type,$allowed_image_type) && in_array($product_main_image_type,$allowed_image_type) && $product_main_image_error == 0 && $product_image_error == 0 ){
+			$product_image_final_name = uniqid("",true).".{$product_image_name_extension}";
+			$product_main_image_final_name = uniqid("",true).".{$product_main_image_extension}";
+			//var_dump(UPLOAD_DIR.DS.$product_image_final_name);
+			if(move_uploaded_file($product_image_tmp_name, UPLOAD_DIR.DS.$product_image_final_name) && move_uploaded_file($product_main_image_tmp_name, UPLOAD_DIR.DS.$product_main_image_final_name)){
+				
+
+			}
+			
+
+
+		}
+		/*** checking for image ***/
+
 	}
 	if(isset($_POST["draft"])){
 
