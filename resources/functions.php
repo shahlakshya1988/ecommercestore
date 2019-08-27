@@ -225,6 +225,7 @@ echo $products;
 function add_product(){
 	global $allowed_image_extension;
 	global $allowed_image_type;
+	global $db;
 	if(isset($_POST["publish"])){
 		// var_dump($_FILES);
 		// var_dump($_POST);
@@ -266,7 +267,29 @@ function add_product(){
 			$product_main_image_final_name = uniqid("",true).".{$product_main_image_extension}";
 			//var_dump(UPLOAD_DIR.DS.$product_image_final_name);
 			if(move_uploaded_file($product_image_tmp_name, UPLOAD_DIR.DS.$product_image_final_name) && move_uploaded_file($product_main_image_tmp_name, UPLOAD_DIR.DS.$product_main_image_final_name)){
-				
+				if(!empty(trim($product_title)) && !empty(trim($product_description)) && !empty(trim($product_price)) && $product_price>0 && !empty(trim($short_desc)) && !empty(trim($product_quantity)) && $product_quantity>0 ){
+					$insert_query = "INSERT INTO `products`(`product_id`,`product_title`,`product_category_id`,`product_price`,`product_description`,`short_desc`,`product_image`,`product_main_image`,`product_quantity`) values (:product_id,:product_title,:product_category_id,:product_price,:product_description,:short_desc,:product_image,:product_main_image,:product_quantity)";
+					$insert = $db->prepare($insert_query);
+					$insert->execute(array(
+						":product_id"=>NULL,
+						":product_title"=>$product_title,
+						":product_category_id"=>$product_category,
+						":product_price"=>$product_price,
+						":product_description"=>$product_description,
+						":short_desc"=>$short_desc,
+						":product_image"=>$product_image_final_name,
+						":product_main_image"=>$product_main_image_final_name,
+						":product_quantity"=>$product_quantity
+					));
+					//var_dump($insert->errorInfo());
+					//var_dump($insert->rowCount());
+					if($insert->rowCount()){
+						setMessage("New Product With The ID :: {$db->lastInsertId()} Added Successfully");
+						redirect("index.php?products");
+					}
+
+				}
+
 
 			}
 			
