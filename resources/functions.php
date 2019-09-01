@@ -32,11 +32,12 @@ function get_products(){
 	if($get_product->execute()){
 		while($row_product = $get_product->fetch(PDO::FETCH_OBJ)){
 			$product_price = number_format($row_product->product_price,2);
+			$product_image = "../resources/".display_image($row_product->product_image);
 
 			$productString = <<<EOL
 			<div class="col-sm-4 col-lg-4 col-md-4">
 				<div class="thumbnail">
-					<a href="item.php?product_id={$row_product->product_id}"><img src="{$row_product->product_image}" alt="{$row_product->product_title}"></a>
+					<a href="item.php?product_id={$row_product->product_id}"><img src="{$product_image}" alt="{$row_product->product_title}"></a>
 					<div class="caption">
 						<h4 class="pull-right">&#36;{$product_price}</h4>
 						<h4><a href="item.php?product_id={$row_product->product_id}">{$row_product->product_title}</a>
@@ -75,10 +76,11 @@ function get_products_in_cat_page($cat_id){
 	$get_products->execute(array(":product_category_id"=>$cat_id));
 
 	while($row_product = $get_products->fetch(PDO::FETCH_OBJ)):
+	$product_image = "../resources/".display_image($row_product->product_image);
 	$category_product=<<<EOL
 	<div class="col-md-3 col-sm-6 hero-feature">
 		<div class="thumbnail">
-			<img src="{$row_product->product_image}" alt="{$row_product->product_title}" class="image-responsive">
+			<img src="{$product_image}" alt="{$row_product->product_title}" class="image-responsive">
 			<div class="caption">
 				<h3>{$row_product->product_title}</h3>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
@@ -104,10 +106,11 @@ function get_products_in_shop_page(){
 	$get_products->execute();
 
 	while($row_product = $get_products->fetch(PDO::FETCH_OBJ)):
+	$product_image = "../resources/".display_image($row_product->product_image);
 	$category_product=<<<EOL
 	<div class="col-md-3 col-sm-6 hero-feature">
 		<div class="thumbnail">
-			<img src="{$row_product->product_image}" alt="{$row_product->product_title}" class="image-responsive">
+			<img src="{$product_image}" alt="{$row_product->product_title}" class="image-responsive">
 			<div class="caption">
 				<h3>{$row_product->product_title}</h3>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
@@ -192,8 +195,13 @@ echo $order_tr;
 	}
 }
 
+function display_image($picture){
+	return "uploads".DS.$picture;
+}
+
 function get_products_in_admin(){
     global $db;
+	//global $
     $sql="SELECT * FROM `products`";
     $get_products = $db->prepare($sql);
    $get_products->execute();
@@ -205,11 +213,12 @@ function get_products_in_admin(){
         $get_category->execute(["cat_id"=>$fh_product->product_category_id]);
         $fh_category = $get_category->fetch(PDO::FETCH_OBJ);
         $delete_product = "../../resources/templates/back/delete_product.php?product_id=".$fh_product->product_id;
+		$productimage = "../../resources/".display_image($fh_product->product_image);
         $products=<<<EOL
         <tr>
             <td>{$fh_product->product_id}</td>
             <td>{$fh_product->product_title}<br>
-                <a href="index.php?edit_product&product_id={$fh_product->product_id}"><img src="{$fh_product->product_image}" alt=""></a>
+                <a href="index.php?edit_product&product_id={$fh_product->product_id}"><img src="{$productimage}" alt="" style="height:100px;"></a>
             </td>
             <td>{$fh_category->cat_title}</td>
             <td>{$fh_product->product_price}</td>
