@@ -26,7 +26,7 @@
       <textarea name="product_description" id="product_description" cols="30" rows="10" class="form-control"></textarea>
     </div>
     <div class="form-group">
-           <label for="short_desc">Product Description</label>
+           <label for="short_desc">Short Description</label>
       <textarea name="short_desc" id="short_desc" cols="30" rows="10" class="form-control"></textarea>
     </div>
 
@@ -85,22 +85,22 @@
     <!-- Product Brands-->
 
 
-    <div class="form-group">
+   <?php /* <div class="form-group">
       <label for="product-title">Product Brand</label>
          <select name="product_brand" id="" class="form-control">
             <option value="">Select Brand</option>
          </select>
-    </div>
+    </div> */ ?>
 
 
 <!-- Product Tags -->
 
 
-    <div class="form-group">
+   <?php /* <div class="form-group">
           <label for="product-title">Product Keywords</label>
           <hr>
         <input type="text" name="product_tags" class="form-control">
-    </div>
+    </div> */ ?>
 
     <!-- Product Image -->
     <div class="form-group">
