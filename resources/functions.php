@@ -475,3 +475,42 @@ function delete_admin_category(){
 	}
 }
 /***** LIST CATEGORIES ADMIN ****/
+
+
+/**** listing of users ****/
+function list_admin_users(){
+	global $db;
+	$list_users_sql = "SELECT * FROM `users`";
+	$list_users = $db->prepare($list_users_sql);	
+	$list_users->execute();
+	while($fh_list_users = $list_users->fetch(PDO::FETCH_OBJ)){
+		$userString= <<<EOL
+		<tr>
+		    <td>$fh_list_users->user_id</td>
+		    <td>Photo</td>
+		    <td>$fh_list_users->username</td>
+		    <td>$fh_list_users->email</td>
+		    <td><a href="index.php?users&del_user={$fh_list_users->user_id}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
+		</tr>
+EOL;
+echo $userString;
+	}
+}
+/**** listing of users ****/
+/***** DELETING THE USER */
+function deleteUser(){
+    global $db;
+    if(isset($_GET["del_user"])){
+        $user_id = trim($_GET["del_user"]);
+        $delete_user_sql="DELETE FROM `users` where `user_id` = :user_id ";
+        $delete_user = $db->prepare($delete_user_sql);
+        $delete_user->execute([
+            "user_id"=>$user_id
+        ]);
+        if($delete_user->rowCount()){
+            setMessage("<p class='bg-success'>User Has Been Succesfully Deleted</p>");
+            redirect("index.php?users");
+        }
+    }
+}
+/***** DELETING THE USER */

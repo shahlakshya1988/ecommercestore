@@ -34,6 +34,7 @@
         <tr>
             <th>id</th>
             <th>Title</th>
+            <th>Action</th>
         </tr>
             </thead>
 
