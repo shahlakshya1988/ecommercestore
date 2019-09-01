@@ -321,6 +321,7 @@ function edit_product(){
 	global $allowed_image_extension;
 	
 	if(isset($_POST["update"])){
+		// echo "<pre>",print_r($_POST),"</pre>";
 		$product_title = trim($_POST["product_title"]);
 		$product_description = trim($_POST["product_description"]);
 		$short_desc = trim($_POST["short_desc"]);
@@ -329,7 +330,7 @@ function edit_product(){
 		$product_category = trim($_POST["product_category"]);
 		$product_image = $_FILES["product_image"];
 		$product_main_image = $_FILES["product_main_image"];
-		$product_id = trim($_GET["product_id"]);
+		$product_id = trim($_GET["id"]);
 		
 		// $product_image_final_name="";
 		$img_name = $_FILES["product_image"]["name"];
@@ -338,12 +339,13 @@ function edit_product(){
 		$img_errors = $_FILES["product_image"]["error"];
 		$img_type = $_FILES["product_image"]["type"];
 
-		$img_extension = strtolower(end(explode($img_name)));
+		$img_array = explode(".",$img_name);
+		$img_extension = strtolower(end($img_array));
 
 		if(in_array($img_type, $allowed_image_type) && in_array($img_extension, $allowed_image_extension) && $img_errors == 0){
-			$image_final_name= uniqid('',true),".{$img_extension}";
+			$image_final_name= uniqid('',true).".{$img_extension}";
 			if(move_uploaded_file($img_tmp_name, UPLOAD_DIR.DS.$image_final_name)){
-				$update_product_img_sql="UPDATE `products` SET `product_image` = :product_image where `product_id` = :product_id";
+				$update_product_img_sql="UPDATE `products` SET `product_image` = :product_image where `product_id` = :product_id LIMIT 1";
 				$update_product = $db->prepare($update_product_img_sql);
 				$update_product->execute([
 					":product_image"=>$image_final_name,
@@ -359,13 +361,13 @@ function edit_product(){
 		$img_tmp_name = $_FILES["product_main_image"]["tmp_name"];
 		$img_errors = $_FILES["product_main_image"]["error"];
 		$img_type = $_FILES["product_main_image"]["type"];
-
-		$img_extension = strtolower(end(explode($img_name)));
+		$img_array = explode(".",$img_name);
+		$img_extension = strtolower(end($img_array));
 
 		if(in_array($img_type, $allowed_image_type) && in_array($img_extension, $allowed_image_extension) && $img_errors == 0){
-			$image_final_name= uniqid('',true),".{$img_extension}";
+			$image_final_name= uniqid('',true).".{$img_extension}";
 			if(move_uploaded_file($img_tmp_name, UPLOAD_DIR.DS.$image_final_name)){
-				$update_product_img_sql="UPDATE `products` SET `product_main_image` = :product_main_image where `product_id` = :product_id";
+				$update_product_img_sql="UPDATE `products` SET `product_main_image` = :product_main_image where `product_id` = :product_id LIMIT 1";
 				$update_product = $db->prepare($update_product_img_sql);
 				$update_product->execute([
 					":product_main_image"=>$image_final_name,
@@ -375,7 +377,7 @@ function edit_product(){
 			}
 		}
 
-		$update_otherdata_sql="UPDATED `products` SET `product_title` = :product_title,
+		$update_otherdata_sql="UPDATE `products` SET `product_title` = :product_title,
 								`product_description` = :product_description, 
 								`short_desc` = :short_desc,
 								`product_price` = :product_price,
@@ -383,7 +385,7 @@ function edit_product(){
 								`product_category_id` = :product_category_id
 								where `product_id` = :product_id LIMIT 1
 								";
-		$update_otherdata= $db->prepare($update_otherdata);
+		$update_otherdata= $db->prepare($update_otherdata_sql);
 		$update_otherdata->execute([
 			":product_id"=>$product_id,
 			":product_title"=>$product_title,
@@ -394,12 +396,16 @@ function edit_product(){
 			":short_desc"=>$short_desc
 
 		]);
-
+		// echo "<pre>",print_r($_POST),"</pre>";
+// var_dump($update_otherdata->errorInfo());
+//die();
 
 
 
 		
 	}
+	setMessage("Product #{$product_id} Has Been Updated Successfully");
+	redirect("index.php?products");
 }
 
 function get_categories_add_product($product_category_id=null){
