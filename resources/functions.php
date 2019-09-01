@@ -435,6 +435,7 @@ function showCategoriesInAdmin(){
 		<tr>
             <td>{$fh_product_categories->cat_id}</td>
             <td>{$fh_product_categories->cat_title}</td>
+            <td><a href="index.php?categories&del={$fh_product_categories->cat_id}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
         </tr>
 EOF;
 echo $categories;
@@ -455,6 +456,21 @@ function manage_categories(){
 			$last_cat_id = $db->lastInsertId();
 		}
 		setMessage("<div class='bg-success'>Category With {$cat_title}, #{$last_cat_id} Inserted</div>");
+		redirect("index.php?categories");
+	}
+}
+
+function delete_admin_category(){
+	global $db;
+	if(isset($_GET["del"])){
+		$cat_id = trim($_GET["del"]);
+		$cat_sql="DELETE FROM `categories` WHERE `cat_id` = :cat_id LIMIT 1";
+		$del_cat = $db->prepare($cat_sql);
+		$del_cat->execute([
+			":cat_id" => $cat_id
+		]);
+		//var_dump($del_cat->errorInfo()); die();
+		setMessage("<div class='bg-danger'>Category With #{$cat_id} is Removed</div>");
 		redirect("index.php?categories");
 	}
 }

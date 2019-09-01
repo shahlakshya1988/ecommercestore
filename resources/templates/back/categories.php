@@ -1,4 +1,4 @@
-<?php manage_categories(); ?>   
+<?php delete_admin_category(); manage_categories(); ?>   
 
 <h1 class="page-header">
   Product Categories
