@@ -61,9 +61,11 @@ function cart()
                     $total+=$subtotal;
                     $item_count+=$value;
                     $subtotal = number_format($subtotal,2);
+					$product_image = "../resources/".display_image($row->product_image);
                     $products = <<<EOL
                     <tr>
-                        <td>{$row->product_title}
+                        <td>{$row->product_title} <br>
+						<img src="{$product_image}" height="100px;" />
                      
                         <input type="hidden" name="item_name_{$count}" value="{$row->product_title}">
                          <input type="hidden" name="item_number_{$count}" value="{$row->product_id}">

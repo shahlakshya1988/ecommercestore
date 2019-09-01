@@ -18,6 +18,7 @@ $get_product->execute(array(":product_id"=>$product_id));
 //echo "<pre>",print_r($row_product),"</pre>";
 while($row_product = $get_product->fetch(PDO::FETCH_OBJ)):
 //echo "<pre>",print_r($row_product),"</pre>";
+$product_image = "../resources/".display_image($row_product->product_main_image);
 ?>
 <div class="col-md-9">
 
@@ -27,7 +28,7 @@ while($row_product = $get_product->fetch(PDO::FETCH_OBJ)):
 
     <div class="col-md-7">
       <?php /* <img class="img-responsive" src="http://placehold.it/700x600" alt=""> */ ?>
-			<img class="img-responsive" src="<?php echo $row_product->product_main_image; ?>" alt="<?php echo $row_product->product_title; ?>">
+			<img class="img-responsive" src="<?php echo $product_image; ?>" alt="<?php echo $row_product->product_title; ?>">
     </div>
 
     <div class="col-md-5">
