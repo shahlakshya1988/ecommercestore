@@ -213,17 +213,18 @@ function get_products_in_admin(){
         $get_category->execute(["cat_id"=>$fh_product->product_category_id]);
         $fh_category = $get_category->fetch(PDO::FETCH_OBJ);
         $delete_product = "../../resources/templates/back/delete_product.php?product_id=".$fh_product->product_id;
+        $edit_product = "index.php?edit_product&id={$fh_product->product_id}";
 		$productimage = "../../resources/".display_image($fh_product->product_image);
         $products=<<<EOL
         <tr>
             <td>{$fh_product->product_id}</td>
             <td>{$fh_product->product_title}<br>
-                <a href="index.php?edit_product&product_id={$fh_product->product_id}"><img src="{$productimage}" alt="" style="height:100px;"></a>
+                <a href="{$edit_product}"><img src="{$productimage}" alt="" style="height:100px;"></a>
             </td>
             <td>{$fh_category->cat_title}</td>
             <td>{$fh_product->product_price}</td>
             <td>{$fh_product->product_quantity}</td>
-            <td><a href="{$delete_product}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+            <td> <a href="{$edit_product}" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a> <a href="{$delete_product}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
         </tr>
 EOL;
 echo $products;
@@ -401,11 +402,11 @@ function edit_product(){
 //die();
 
 
-
+		setMessage("Product #{$product_id} Has Been Updated Successfully");
+		redirect("index.php?products");
 		
 	}
-	setMessage("Product #{$product_id} Has Been Updated Successfully");
-	redirect("index.php?products");
+	
 }
 
 function get_categories_add_product($product_category_id=null){
