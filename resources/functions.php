@@ -234,6 +234,7 @@ echo $products;
 function add_product(){
 	global $allowed_image_extension;
 	global $allowed_image_type;
+	global $allowed_image_size;
 	global $db;
 	if(isset($_POST["publish"])){
 		// var_dump($_FILES);
@@ -310,6 +311,94 @@ function add_product(){
 	}
 	if(isset($_POST["draft"])){
 
+	}
+}
+
+function edit_product(){
+	global $db;
+	global $allowed_image_size;
+	global $allowed_image_type;
+	global $allowed_image_extension;
+	
+	if(isset($_POST["update"])){
+		$product_title = trim($_POST["product_title"]);
+		$product_description = trim($_POST["product_description"]);
+		$short_desc = trim($_POST["short_desc"]);
+		$product_price = trim($_POST["product_price"]);
+		$product_quantity = trim($_POST["product_quantity"]);
+		$product_category = trim($_POST["product_category"]);
+		$product_image = $_FILES["product_image"];
+		$product_main_image = $_FILES["product_main_image"];
+		$product_id = trim($_GET["product_id"]);
+		
+		// $product_image_final_name="";
+		$img_name = $_FILES["product_image"]["name"];
+		$img_size = $_FILES["product_image"]["size"];
+		$img_tmp_name = $_FILES["product_image"]["tmp_name"];
+		$img_errors = $_FILES["product_image"]["error"];
+		$img_type = $_FILES["product_image"]["type"];
+
+		$img_extension = strtolower(end(explode($img_name)));
+
+		if(in_array($img_type, $allowed_image_type) && in_array($img_extension, $allowed_image_extension) && $img_errors == 0){
+			$image_final_name= uniqid('',true),".{$img_extension}";
+			if(move_uploaded_file($img_tmp_name, UPLOAD_DIR.DS.$image_final_name)){
+				$update_product_img_sql="UPDATE `products` SET `product_image` = :product_image where `product_id` = :product_id";
+				$update_product = $db->prepare($update_product_img_sql);
+				$update_product->execute([
+					":product_image"=>$image_final_name,
+					":product_id"=>$product_id
+				]);
+
+			}
+		}
+
+		// $product_main_image_final_name="";
+		$img_name = $_FILES["product_main_image"]["name"];
+		$img_size = $_FILES["product_main_image"]["size"];
+		$img_tmp_name = $_FILES["product_main_image"]["tmp_name"];
+		$img_errors = $_FILES["product_main_image"]["error"];
+		$img_type = $_FILES["product_main_image"]["type"];
+
+		$img_extension = strtolower(end(explode($img_name)));
+
+		if(in_array($img_type, $allowed_image_type) && in_array($img_extension, $allowed_image_extension) && $img_errors == 0){
+			$image_final_name= uniqid('',true),".{$img_extension}";
+			if(move_uploaded_file($img_tmp_name, UPLOAD_DIR.DS.$image_final_name)){
+				$update_product_img_sql="UPDATE `products` SET `product_main_image` = :product_main_image where `product_id` = :product_id";
+				$update_product = $db->prepare($update_product_img_sql);
+				$update_product->execute([
+					":product_main_image"=>$image_final_name,
+					":product_id"=>$product_id
+				]);
+
+			}
+		}
+
+		$update_otherdata_sql="UPDATED `products` SET `product_title` = :product_title,
+								`product_description` = :product_description, 
+								`short_desc` = :short_desc,
+								`product_price` = :product_price,
+								`product_quantity` = :product_quantity,
+								`product_category_id` = :product_category_id
+								where `product_id` = :product_id LIMIT 1
+								";
+		$update_otherdata= $db->prepare($update_otherdata);
+		$update_otherdata->execute([
+			":product_id"=>$product_id,
+			":product_title"=>$product_title,
+			":product_description"=>$product_description,
+			":product_price"=>$product_price,
+			":product_quantity"=>$product_quantity,
+			":product_category_id"=>$product_category,
+			":short_desc"=>$short_desc
+
+		]);
+
+
+
+
+		
 	}
 }
 
