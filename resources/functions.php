@@ -423,3 +423,39 @@ EOL;
 	}
 }
 /************** BACK END FUNCTIONS *****************************/
+
+/***** LIST CATEGORIES ADMIN ****/
+function showCategoriesInAdmin(){
+	global $db;
+	$get_product_categories_sql = "SELECT * FROM `categories`";
+	$get_product_categories = $db->prepare($get_product_categories_sql);
+	$get_product_categories->execute();
+	while($fh_product_categories = $get_product_categories->fetch(PDO::FETCH_OBJ)){
+		$categories = <<<EOF
+		<tr>
+            <td>{$fh_product_categories->cat_id}</td>
+            <td>{$fh_product_categories->cat_title}</td>
+        </tr>
+EOF;
+echo $categories;
+	}
+}
+
+function manage_categories(){
+	global $db;
+	if(isset($_POST["add_categories"])){
+		$cat_title = trim($_POST["category_title"]);
+		if($cat_title!=''){
+			$cat_sql = "INSERT INTO `categories` (`cat_id`,`cat_title`) values(:cat_id,:cat_title)";
+			$insert_cat = $db->prepare($cat_sql);
+			$insert_cat->execute([
+				":cat_id"=>null,
+				":cat_title"=>$cat_title
+			]);
+			$last_cat_id = $db->lastInsertId();
+		}
+		setMessage("<div class='bg-success'>Category With {$cat_title}, #{$last_cat_id} Inserted</div>");
+		redirect("index.php?categories");
+	}
+}
+/***** LIST CATEGORIES ADMIN ****/
