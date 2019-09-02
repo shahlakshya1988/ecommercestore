@@ -484,12 +484,14 @@ function list_admin_users(){
 	$list_users = $db->prepare($list_users_sql);	
 	$list_users->execute();
 	while($fh_list_users = $list_users->fetch(PDO::FETCH_OBJ)){
+        $image_path = "../../resources/".display_image($fh_list_users->photo);
 		$userString= <<<EOL
 		<tr>
 		    <td>$fh_list_users->user_id</td>
-		    <td>Photo</td>
+		    <td><img src="{$image_path}" height="150"></td>
 		    <td>$fh_list_users->username</td>
-		    <td>$fh_list_users->email</td>
+            <td>$fh_list_users->email</td>
+            <td><a href="index.php?edit_user&edit_id={$fh_list_users->user_id}" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a></td>
 		    <td><a href="index.php?users&del_user={$fh_list_users->user_id}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>
 		</tr>
 EOL;
@@ -583,7 +585,7 @@ function edit_user(){
         $username = trim($_POST["username"]);
         $password = trim($_POST["password"]);
         $email = trim($_POST["email"]);
-        $user_id = trim($_GET["user_id"]);
+        $user_id = trim($_GET["edit_id"]);
         $image_name = $_FILES["file"]["name"];
         $image_tmp_name = $_FILES["file"]["tmp_name"];
         $image_size = $_FILES["file"]["size"];

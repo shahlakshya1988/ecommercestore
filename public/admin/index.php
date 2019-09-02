@@ -63,6 +63,7 @@ require_once TEMPLATE_BACK.DS."header.php";
                if(isset($_GET["add_user"])){
                     require_once TEMPLATE_BACK.DS."add_user.php";
                }
+               
                if(isset($_GET["edit_user"])){
                     require_once TEMPLATE_BACK.DS."edit_user.php";
                }
