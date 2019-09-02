@@ -627,3 +627,41 @@ function edit_user(){
     }
 }
 /************* adding user */
+/**** GENERATING REPORTS  */
+function get_reports_in_admin(){
+    global $db;
+    $get_reports_sql = "SELECT * FROM `reports`";
+    $get_reports = $db->prepare($get_reports_sql);
+    $get_reports->execute();
+    while($fh_reports = $get_reports->fetch(PDO::FETCH_OBJ)){
+        $row= <<<EOF
+        <tr>
+            <td>{$fh_reports->report_id}</td>
+            <td>{$fh_reports->order_id}</td>
+            <td>{$fh_reports->product_title}</td>
+            <td>{$fh_reports->product_price}</td>
+            <td>{$fh_reports->product_quantity}</td>
+            <td><a href="index.php?reports&delete_report_id={$fh_reports->report_id}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+        </tr>
+EOF;
+echo $row;
+    }
+}
+/**** GENERATING REPORTS  */
+
+/*** deleteing reports */
+function delete_reports(){
+    global $db;
+    if(isset($_GET["delete_report_id"])){
+        $report_id = trim($_GET["delete_report_id"]);
+        $report_sql = "DELETE FROM `reports` where `report_id` = :report_id";
+        $delete_report= $db->prepare($report_sql);
+        $delete_report->execute([
+            ":report_id"=>$report_id
+        ]);
+       // var_dump($delete_report->errorInfo()); die();
+        setMessage("<div class='bg-danger'>Report Has Been Successfully Removed</div>");
+        redirect("index.php?reports");
+    }
+}
+/*** deleteing reports */
