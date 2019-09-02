@@ -514,3 +514,114 @@ function deleteUser(){
     }
 }
 /***** DELETING THE USER */
+
+/************* adding user */
+function add_user(){
+    global $db;
+    global $allowed_image_extension;
+    global $allowed_image_size;
+    global $allowed_image_type;
+
+    if(isset($_POST["submituser"])){
+        $username = trim($_POST["username"]);
+        $password = trim($_POST["password"]);
+        $email = trim($_POST["email"]);
+
+        $image_name = $_FILES["file"]["name"];
+        $image_tmp_name = $_FILES["file"]["tmp_name"];
+        $image_size = $_FILES["file"]["size"];
+        $image_error = $_FILES["file"]["error"];
+        $image_type = $_FILES["file"]["type"];
+        $image_name_array = explode(".",$image_name);
+        $image_extension = end($image_name_array);
+        //var_dump(in_array($image_type,$allowed_image_type) && in_array($image_extension,$allowed_image_extension) && $image_error==0);
+        //die();
+        if(in_array($image_type,$allowed_image_type) && in_array($image_extension,$allowed_image_extension) && $image_error==0){
+            $image_final_name = uniqid("",true).".{$image_extension}";
+            $image_path=UPLOAD_DIR.DS.$image_final_name;
+            //var_dump(move_uploaded_file($image_tmp_name,$image_path)); die();
+            if(move_uploaded_file($image_tmp_name,$image_path)){
+                
+                $insert_sql = "INSERT INTO `users` (`user_id`, `username`, `password`, `email`,`photo`) value (:user_id,:username,:password,:email,:image_final_name)";
+                $insert_user = $db->prepare($insert_sql);
+                $insert_user->execute([
+                    ":user_id"=>null,
+                    ":username"=>$username,
+                    ":password"=>$password,
+                    ":email"=>$email,
+                    ":image_final_name"=>$image_final_name
+                ]);
+
+            }
+
+        }else{
+
+            $insert_sql = "INSERT INTO `users` (`user_id`, `username`, `password`, `email`) value (:user_id,:username,:password,:email)";
+            $insert_user = $db->prepare($insert_sql);
+            $insert_user->execute([
+                ":user_id"=>null,
+                ":username"=>$username,
+                ":password"=>$password,
+                ":email"=>$email
+            ]);
+        }
+
+      
+        $lastInsertId = $db->lastInsertId();
+        setMessage("<p class='bg-success'>User with id #{$lastInsertId} Has Been Successfully Created</p>");
+        redirect("index.php?users");
+    }
+
+}
+function edit_user(){
+    global $db;
+    global $allowed_image_size;
+    global $allowed_image_extension;
+    global $allowed_image_type;
+
+    if(isset($_POST["submitEditUser"])){
+        $username = trim($_POST["username"]);
+        $password = trim($_POST["password"]);
+        $email = trim($_POST["email"]);
+        $user_id = trim($_GET["user_id"]);
+        $image_name = $_FILES["file"]["name"];
+        $image_tmp_name = $_FILES["file"]["tmp_name"];
+        $image_size = $_FILES["file"]["size"];
+        $image_error = $_FILES["file"]["error"];
+        $image_type = $_FILES["file"]["type"];
+        $image_name_array = explode(".",$image_name);
+        $image_extension = end($image_name_array);
+        //var_dump(in_array($image_type,$allowed_image_type) && in_array($image_extension,$allowed_image_extension) && $image_error==0);
+        //die();
+        if(in_array($image_type,$allowed_image_type) && in_array($image_extension,$allowed_image_extension) && $image_error==0){
+            $image_final_name = uniqid("",true).".{$image_extension}";
+            $image_path=UPLOAD_DIR.DS.$image_final_name;
+            //var_dump(move_uploaded_file($image_tmp_name,$image_path)); die();
+            if(move_uploaded_file($image_tmp_name,$image_path)){
+                $update_photo_sql="UPDATE `users` SET `photo` = :image_final_name where `user_id` = :user_id";
+                $update_photo= $db->prepare($update_photo_sql);
+                $update_photo->execute(
+                    [
+                        ":image_final_name"=>$image_final_name,
+                        ":user_id"=>$user_id
+                    ]
+                );
+            }
+        }
+
+
+
+        $update_sql = "UPDATE users SET `username` = :username, `password` = :password, `email` = :email where `user_id` = :user_id";
+        $update_user= $db->prepare($update_sql);
+        $update_user->execute([
+            ":user_id"=>$user_id,
+            ":username"=>$username,
+            ":password"=>$password,
+            ":email"=>$email
+        ]);
+
+        setMessage("<p class='bg-success'>User with id #{$user_id} Has Been Updated Created</p>");
+        redirect("index.php?users");
+    }
+}
+/************* adding user */
